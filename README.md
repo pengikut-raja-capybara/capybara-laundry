@@ -1,56 +1,35 @@
-# Welcome to your Expo app 👋
+# CaNdry — Capybara Laundry POS
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Aplikasi kasir (Point of Sale) dan pencatatan arus kas khusus usaha laundry yang bekerja **100% offline** di Android & iOS (React Native + Expo), dengan arsitektur siap integrasi cloud di masa depan.
 
-## Get started
+- **Package ID:** `com.angsadev.capybaralaundry`
+- **Kreator:** Angga Alfiansah (`anggaalfiansah26@gmail.com`)
+- **Tim Pengembang:** Pengikut Raja Capybara
+- **Publisher Play Store:** ANGSA Development Studio
 
-1. Install dependencies
+## Fitur Utama
+- **Catat Cucian Cepat:** Ketik nama pelanggan (dengan saran otomatis) + berat (kg), atau buka opsi lanjutan untuk multi-paket, pembayaran DP/Bayar Nanti, promo, dan catatan.
+- **Status Cucian 4 Tahap:** Diterima → Diproses → Selesai → Diambil dengan filter status & periode bulan.
+- **Detail Nota & Bagikan:** Tampilan struk sesuai profil usaha laundry, bagikan foto struk (PNG), dan kirim rincian langsung ke WhatsApp.
+- **Buku Kas Akuntansi:** Pencatatan pemasukan & pengeluaran dengan kategori akuntansi, lampiran foto bukti, serta pencatatan otomatis dari pembayaran cucian.
+- **Laporan Harian / Bulanan / Tahunan:** Kartu arus kas bersih, grafik batang dinamis, rincian per kategori, dan export laporan PDF.
+- **Keamanan & Backup Lokal:** Kunci kata sandi PBKDF2-SHA256 (sesi 1 jam), biometrik opsional, reset kode master statis, serta Export & Restore cadangan `.json`.
 
-   ```bash
-   npm install
-   ```
+## Dokumen Play Store & Privasi
+- [Materi Listing Google Play Store](./STORE_LISTING.md)
+- [Kebijakan Privasi / Privacy Policy (Markdown)](./PRIVACY_POLICY.md)
+- [Kebijakan Privasi (HTML / GitHub Pages)](./docs/privacy-policy.html)
 
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **src/app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
+## Cara Menjalankan Lokal
 ```bash
-npm run reset-project
+npm install
+npx expo start
 ```
 
-This command will move the starter code to the **example** directory and create a blank **src/app** directory where you can start developing.
+Untuk mengatur frasa kode master reset kata sandi sendiri sebelum build rilis:
+```bash
+npm run set-master-code
+```
 
-### Other setup steps
-
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## Kustomisasi & Belajar
+Ingin kustomisasi lebih lanjut atau belajar cara membuat aplikasi mobile seperti ini? Silakan **fork** repository ini atau hubungi kreator di `anggaalfiansah26@gmail.com`.
