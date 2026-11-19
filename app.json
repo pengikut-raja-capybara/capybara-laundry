@@ -2,7 +2,9 @@
   "expo": {
     "name": "CaNdry",
     "slug": "capybara-laundry",
+    "owner": "anggaalfiansah",
     "version": "1.0.0",
+    "githubUrl": "https://github.com/pengikut-raja-capybara/capybara-laundry",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "candry",
@@ -31,9 +33,9 @@
       [
         "expo-splash-screen",
         {
-          "backgroundColor": "#FFFFFF",
+          "backgroundColor": "#2358D0",
           "image": "./assets/images/splash-icon.png",
-          "imageWidth": 120
+          "imageWidth": 160
         }
       ],
       "expo-sqlite",
@@ -43,6 +45,12 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "f3c93e05-6d5e-4dab-b38a-c8e6771ee726"
+      }
     }
   }
 }

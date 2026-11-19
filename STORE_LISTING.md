@@ -79,7 +79,18 @@ Publisher: ANGSA Development Studio
 
 ---
 
-## 4. Panduan Kuesioner Keamanan Data & Privasi (Google Play Console)
+## 4. Aset Grafis Siap Unggah
+
+Seluruh aset grafis Play Store telah disiapkan di dalam repositori ini:
+
+| Jenis Aset Play Console | Spesifikasi | Lokasi File di Repo |
+| :--- | :--- | :--- |
+| **Ikon Aplikasi (Hi-Res Icon)** | `512 x 512 px` PNG | [docs/store-listing/hi-res-icon-512x512.png](./docs/store-listing/hi-res-icon-512x512.png) |
+| **Gambar Fitur (Feature Graphic)** | `1024 x 500 px` PNG | [docs/store-listing/feature-graphic-1024x500.png](./docs/store-listing/feature-graphic-1024x500.png) |
+
+---
+
+## 5. Panduan Kuesioner Keamanan Data & Privasi (Google Play Console)
 
 - **URL Kebijakan Privasi (Privacy Policy URL):**  
   `https://pengikut-raja-capybara.github.io/capybara-laundry/privacy-policy.html`  
