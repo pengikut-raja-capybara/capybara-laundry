@@ -525,6 +525,21 @@ export const PosRepository = {
     });
   },
 
+  async deleteOrder(orderId: string): Promise<void> {
+    const now = new Date().toISOString();
+    const db = await getDb();
+    await db.withTransactionAsync(async () => {
+      await db.runAsync(
+        "UPDATE orders SET deleted_at = ?, updated_at = ?, version = version + 1, sync_status = 'pending' WHERE id = ?",
+        [now, now, orderId]
+      );
+      await db.runAsync(
+        "UPDATE transactions SET deleted_at = ?, updated_at = ?, version = version + 1, sync_status = 'pending' WHERE order_id = ? AND deleted_at IS NULL",
+        [now, now, orderId]
+      );
+    });
+  },
+
   async getTransactions(): Promise<CashTransaction[]> {
     const db = await getDb();
     return await db.getAllAsync<CashTransaction>(

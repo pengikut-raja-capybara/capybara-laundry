@@ -4,7 +4,6 @@ import { File, Paths } from 'expo-file-system';
 import * as Sharing from 'expo-sharing';
 import React, { useState } from 'react';
 import {
-  Alert,
   KeyboardAvoidingView,
   Modal,
   Platform,
@@ -97,6 +96,16 @@ export default function MoreScreen() {
     String(settings.initialCashBalance || 0)
   );
   const [newPass, setNewPass] = useState('');
+
+  const syncSettingsForm = () => {
+    const latest = useAppStore.getState().settings;
+    setShopName(latest.shopName);
+    setShopTagline(latest.tagline);
+    setShopPhone(latest.phone);
+    setShopAddress(latest.address);
+    setReceiptFooter(latest.receiptFooter);
+    setInitialBalanceStr(String(latest.initialCashBalance || 0));
+  };
 
   // --- Paket Handlers ---
   const openAddServiceModal = () => {
@@ -345,6 +354,7 @@ export default function MoreScreen() {
         const content = await file.text();
         await PosRepository.restoreBackupJson(content);
         await refreshAll();
+        syncSettingsForm();
         showDialog({
           tone: 'success',
           title: 'Restore berhasil',
@@ -374,6 +384,7 @@ export default function MoreScreen() {
           icon: 'trash-outline',
           onPress: async () => {
             await resetAllData();
+            syncSettingsForm();
             showDialog({
               tone: 'success',
               title: 'Data berhasil direset',
@@ -403,7 +414,12 @@ export default function MoreScreen() {
                 key={t.key}
                 activeOpacity={0.8}
                 style={[styles.segmentItem, active && styles.segmentItemActive]}
-                onPress={() => setSubTab(t.key)}
+                onPress={() => {
+                  if (t.key === 'pengaturan') {
+                    syncSettingsForm();
+                  }
+                  setSubTab(t.key);
+                }}
               >
                 <Ionicons
                   name={t.icon}

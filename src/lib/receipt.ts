@@ -1,6 +1,6 @@
 import * as Print from 'expo-print';
 import * as Sharing from 'expo-sharing';
-import { Alert, Linking, Platform } from 'react-native';
+import { Linking, Platform } from 'react-native';
 import { BusinessSettings, CashTransaction, LaundryOrder } from '../db/database';
 import { showDialog } from '../components/AppDialog';
 import { formatDateLong, formatDateShortWithTime, formatRupiah } from './format';
@@ -393,31 +393,33 @@ export async function exportReportPdf(params: {
     </html>
   `;
 
-  try {
-    if (Platform.OS === 'web') {
-      await Print.printAsync({ html });
-      return;
-    }
-    const { uri } = await Print.printToFileAsync({ html });
-    const canShare = await Sharing.isAvailableAsync();
-    if (canShare) {
-      await Sharing.shareAsync(uri, {
-        mimeType: 'application/pdf',
-        dialogTitle: `Laporan ${settings.shopName} - ${periodTitle}`,
-        UTI: 'com.adobe.pdf',
-      });
-    } else {
+  await withAutoLockSuppressed(async () => {
+    try {
+      if (Platform.OS === 'web') {
+        await Print.printAsync({ html });
+        return;
+      }
+      const { uri } = await Print.printToFileAsync({ html });
+      const canShare = await Sharing.isAvailableAsync();
+      if (canShare) {
+        await Sharing.shareAsync(uri, {
+          mimeType: 'application/pdf',
+          dialogTitle: `Laporan ${settings.shopName} - ${periodTitle}`,
+          UTI: 'com.adobe.pdf',
+        });
+      } else {
+        showDialog({
+          tone: 'success',
+          title: 'Laporan tersimpan',
+          message: `File PDF disimpan di: ${uri}`,
+        });
+      }
+    } catch (err: any) {
       showDialog({
-        tone: 'success',
-        title: 'Laporan tersimpan',
-        message: `File PDF disimpan di: ${uri}`,
+        tone: 'danger',
+        title: 'Gagal unduh laporan',
+        message: err?.message || 'Terjadi kesalahan saat membuat PDF.',
       });
     }
-  } catch (err: any) {
-    showDialog({
-      tone: 'danger',
-      title: 'Gagal unduh laporan',
-      message: err?.message || 'Terjadi kesalahan saat membuat PDF.',
-    });
-  }
+  });
 }

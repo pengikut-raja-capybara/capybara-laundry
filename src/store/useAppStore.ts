@@ -62,6 +62,7 @@ interface AppState {
   }) => Promise<LaundryOrder>;
   updateOrderStatus: (orderId: string, status: OrderStatus) => Promise<void>;
   settleOrderPayment: (orderId: string, method?: PaymentMethod) => Promise<void>;
+  deleteOrder: (orderId: string) => Promise<void>;
 
   addCashTransaction: (input: {
     type: TransactionType;
@@ -199,6 +200,11 @@ export const useAppStore = create<AppState>((set, get) => ({
 
   settleOrderPayment: async (orderId, method = 'Tunai') => {
     await PosRepository.settleOrderPayment(orderId, method);
+    await get().refreshAll();
+  },
+
+  deleteOrder: async (orderId) => {
+    await PosRepository.deleteOrder(orderId);
     await get().refreshAll();
   },
 

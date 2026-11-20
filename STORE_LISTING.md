@@ -87,6 +87,19 @@ Seluruh aset grafis Play Store telah disiapkan di dalam repositori ini:
 | :--- | :--- | :--- |
 | **Ikon Aplikasi (Hi-Res Icon)** | `512 x 512 px` PNG | [docs/store-listing/hi-res-icon-512x512.png](./docs/store-listing/hi-res-icon-512x512.png) |
 | **Gambar Fitur (Feature Graphic)** | `1024 x 500 px` PNG | [docs/store-listing/feature-graphic-1024x500.png](./docs/store-listing/feature-graphic-1024x500.png) |
+| **Screenshot Play Store 1 (Beranda & Kas)** | `1080 x 1920 px` PNG (`9:16`) | [docs/store-listing/screenshots/01-beranda-kasir.png](./docs/store-listing/screenshots/01-beranda-kasir.png) |
+| **Screenshot Play Store 2 (Tambah Cucian)** | `1080 x 1920 px` PNG (`9:16`) | [docs/store-listing/screenshots/02-catat-cucian-cepat.png](./docs/store-listing/screenshots/02-catat-cucian-cepat.png) |
+| **Screenshot Play Store 3 (Status & WA)** | `1080 x 1920 px` PNG (`9:16`) | [docs/store-listing/screenshots/03-status-cucian-wa.png](./docs/store-listing/screenshots/03-status-cucian-wa.png) |
+| **Screenshot Play Store 4 (Buku Kas)** | `1080 x 1920 px` PNG (`9:16`) | [docs/store-listing/screenshots/04-buku-kas-transaksi.png](./docs/store-listing/screenshots/04-buku-kas-transaksi.png) |
+| **Screenshot Play Store 5 (Laporan & PDF)** | `1080 x 1920 px` PNG (`9:16`) | [docs/store-listing/screenshots/05-laporan-keuangan-pdf.png](./docs/store-listing/screenshots/05-laporan-keuangan-pdf.png) |
+| **Screenshot Play Store 6 (Paket & Promo)** | `1080 x 1920 px` PNG (`9:16`) | [docs/store-listing/screenshots/06-paket-dan-promo.png](./docs/store-listing/screenshots/06-paket-dan-promo.png) |
+| **Screenshot Play Store 7 (Pelanggan & Struk)** | `1080 x 1920 px` PNG (`9:16`) | [docs/store-listing/screenshots/07-pelanggan-dan-struk.png](./docs/store-listing/screenshots/07-pelanggan-dan-struk.png) |
+| **Screenshot Play Store 8 (Keamanan & Offline)** | `1080 x 1920 px` PNG (`9:16`) | [docs/store-listing/screenshots/08-keamanan-offline.png](./docs/store-listing/screenshots/08-keamanan-offline.png) |
+
+> **Tips Unggah Play Console:** Gunakan ke-8 file di folder `docs/store-listing/screenshots/` (`1080 × 1920 px`) pada kolom **Phone screenshots** agar lolos rekomendasi promosi Play Store (maks. 8 gambar per listing). Jika membutuhkan gambar layar murni tanpa bingkai teks promosi (rasio `1.94:1 < 2:1`), ke-12 tangkapan layar bersih (`480 × 932 px` JPEG) juga tersedia di folder [docs/screenshots/](./docs/screenshots/):
+> - [01-beranda.jpg](./docs/screenshots/01-beranda.jpg), [02-tambah-cucian.jpg](./docs/screenshots/02-tambah-cucian.jpg), [03-cucian.jpg](./docs/screenshots/03-cucian.jpg), [04-transaksi.jpg](./docs/screenshots/04-transaksi.jpg)
+> - [05-tambah-transaksi.jpg](./docs/screenshots/05-tambah-transaksi.jpg), [06-laporan.jpg](./docs/screenshots/06-laporan.jpg), [07-menu-paket.jpg](./docs/screenshots/07-menu-paket.jpg), [08-menu-pelanggan.jpg](./docs/screenshots/08-menu-pelanggan.jpg)
+> - [09-menu-promo.jpg](./docs/screenshots/09-menu-promo.jpg), [10-menu-pengaturan.jpg](./docs/screenshots/10-menu-pengaturan.jpg), [11-login.jpg](./docs/screenshots/11-login.jpg), [12-tentang-aplikasi.jpg](./docs/screenshots/12-tentang-aplikasi.jpg)
 
 ---
 

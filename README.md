@@ -7,6 +7,20 @@ Aplikasi kasir (Point of Sale) dan pencatatan arus kas khusus usaha laundry yang
 - **Tim Pengembang:** Pengikut Raja Capybara
 - **Publisher Play Store:** ANGSA Development Studio
 
+---
+
+## 📱 Tangkapan Layar (Screenshots)
+
+| Beranda & Arus Kas | Catat Cucian Cepat | Daftar & Status Cucian | Laporan Arus Kas |
+| :---: | :---: | :---: | :---: |
+| ![Beranda](./docs/screenshots/01-beranda.jpg) | ![Tambah Cucian](./docs/screenshots/02-tambah-cucian.jpg) | ![Daftar Cucian](./docs/screenshots/03-cucian.jpg) | ![Laporan](./docs/screenshots/06-laporan.jpg) |
+
+| Buku Kas Transaksi | Tambah Transaksi Kas | Paket, Pelanggan & Promo | Keamanan & Tentang |
+| :---: | :---: | :---: | :---: |
+| ![Transaksi](./docs/screenshots/04-transaksi.jpg) | ![Tambah Transaksi](./docs/screenshots/05-tambah-transaksi.jpg) | ![Menu Paket](./docs/screenshots/07-menu-paket.jpg) | ![Login](./docs/screenshots/11-login.jpg) |
+
+> Materi lengkap untuk publikasi Google Play Store (Deskripsi Indonesia & Inggris, 8 slide promosi `1080×1920`, ikon `512×512`, *feature graphic* `1024×500`, serta panduan Data Safety) tersedia di [STORE_LISTING.md](./STORE_LISTING.md).
+
 ## Fitur Utama
 - **Catat Cucian Cepat:** Ketik nama pelanggan (dengan saran otomatis) + berat (kg), atau buka opsi lanjutan untuk multi-paket, pembayaran DP/Bayar Nanti, promo, dan catatan.
 - **Status Cucian 4 Tahap:** Diterima → Diproses → Selesai → Diambil dengan filter status & periode bulan.

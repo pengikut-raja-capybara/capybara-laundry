@@ -2,7 +2,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import * as Sharing from "expo-sharing";
 import { useMemo, useRef } from "react";
-import { Alert, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ViewShot from "react-native-view-shot";
 import { showDialog } from "../components/AppDialog";
@@ -26,6 +26,7 @@ export default function OrderDetailScreen() {
   const settings = useAppStore((s) => s.settings);
   const updateOrderStatus = useAppStore((s) => s.updateOrderStatus);
   const settleOrderPayment = useAppStore((s) => s.settleOrderPayment);
+  const deleteOrder = useAppStore((s) => s.deleteOrder);
 
   const receiptRef = useRef<any>(null);
 
@@ -48,6 +49,26 @@ export default function OrderDetailScreen() {
   }
 
   const remaining = Math.max(0, order.total_amount - order.paid_amount);
+
+  const handleConfirmDeleteOrder = () => {
+    showDialog({
+      tone: "danger",
+      title: "Hapus nota cucian?",
+      message: `Nota ${order.order_code} (${order.customer_name}) beserta catatan transaksi kas terkait akan dihapus.`,
+      actions: [
+        { label: "Batal", variant: "ghost" },
+        {
+          label: "Hapus Nota",
+          variant: "danger",
+          icon: "trash-outline",
+          onPress: async () => {
+            await deleteOrder(order.id);
+            router.back();
+          },
+        },
+      ],
+    });
+  };
 
   const handleShareReceiptImage = async () => {
     if (Platform.OS === "web") {
@@ -110,6 +131,10 @@ export default function OrderDetailScreen() {
 
           <TouchableOpacity style={[styles.iconCircleBtn, { backgroundColor: colors.incomeBg }]} onPress={() => sendOrderWhatsApp(order, settings)} accessibilityLabel="Kirim ke WhatsApp">
             <Ionicons name="logo-whatsapp" size={20} color={colors.income} />
+          </TouchableOpacity>
+
+          <TouchableOpacity style={[styles.iconCircleBtn, { backgroundColor: colors.expenseBg }]} onPress={handleConfirmDeleteOrder} accessibilityLabel="Hapus nota cucian">
+            <Ionicons name="trash-outline" size={20} color={colors.expense} />
           </TouchableOpacity>
         </View>
       </View>

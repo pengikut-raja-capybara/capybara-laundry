@@ -2,11 +2,11 @@ import { Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import { router } from "expo-router";
 import { useState } from "react";
-import { Alert, KeyboardAvoidingView, Modal, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { KeyboardAvoidingView, Modal, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { showDialog } from "../components/AppDialog";
 import { PaymentMethod, TransactionType } from "../db/database";
-import { formatDateMedium, formatDigitsWithDots, parseRupiahInput } from "../lib/format";
+import { formatDateMedium, formatDigitsWithDots, parseRupiahInput, toLocalDateKey } from "../lib/format";
 import { withAutoLockSuppressed } from "../lib/security";
 import { useAppStore } from "../store/useAppStore";
 import { colors, radius, shadows, spacing } from "../theme/tokens";
@@ -38,6 +38,7 @@ export default function AddTransactionScreen() {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState(INCOME_CATEGORIES[0]);
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("Tunai");
+  const [txDate, setTxDate] = useState<Date>(() => new Date());
   const [notes, setNotes] = useState("");
   const [proofUri, setProofUri] = useState<string | null>(null);
 
@@ -46,6 +47,26 @@ export default function AddTransactionScreen() {
 
   const isIncome = txType === "income";
   const categories = isIncome ? INCOME_CATEGORIES : EXPENSE_CATEGORIES;
+
+  const todayDateKey = toLocalDateKey(new Date());
+  const yesterdayDate = new Date();
+  yesterdayDate.setDate(yesterdayDate.getDate() - 1);
+  const yesterdayDateKey = toLocalDateKey(yesterdayDate);
+  const selectedDateKey = toLocalDateKey(txDate);
+
+  const shiftDate = (days: number) => {
+    setTxDate((prev) => {
+      const next = new Date(prev);
+      next.setDate(next.getDate() + days);
+      return next;
+    });
+  };
+
+  const selectPresetDate = (daysOffset: number) => {
+    const next = new Date();
+    next.setDate(next.getDate() + daysOffset);
+    setTxDate(next);
+  };
 
   const handleSwitchType = (nextType: TransactionType) => {
     setTxType(nextType);
@@ -96,6 +117,7 @@ export default function AddTransactionScreen() {
       title: title.trim(),
       category,
       paymentMethod,
+      transactionDate: txDate.toISOString(),
       notes: notes.trim(),
       proofUri,
     });
@@ -161,24 +183,60 @@ export default function AddTransactionScreen() {
             </TouchableOpacity>
           </View>
 
-          <View style={styles.twoColRow}>
-            <View style={{ flex: 1 }}>
-              <Text style={styles.label}>Tanggal</Text>
-              <View style={styles.selectBox}>
-                <Text style={styles.selectValue}>{formatDateMedium(new Date())}</Text>
-                <Ionicons name="calendar-outline" size={18} color={colors.textSecondary} />
+          <View style={styles.fieldGroup}>
+            <View style={styles.rowBetween}>
+              <Text style={[styles.label, { marginBottom: 0 }]}>Tanggal</Text>
+              <View style={styles.quickDateRow}>
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  style={[styles.quickDatePill, selectedDateKey === todayDateKey && styles.quickDatePillActive]}
+                  onPress={() => selectPresetDate(0)}
+                >
+                  <Text style={[styles.quickDateText, selectedDateKey === todayDateKey && styles.quickDateTextActive]}>Hari ini</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  style={[styles.quickDatePill, selectedDateKey === yesterdayDateKey && styles.quickDatePillActive]}
+                  onPress={() => selectPresetDate(-1)}
+                >
+                  <Text style={[styles.quickDateText, selectedDateKey === yesterdayDateKey && styles.quickDateTextActive]}>Kemarin</Text>
+                </TouchableOpacity>
               </View>
             </View>
-
-            <View style={{ flex: 1 }}>
-              <Text style={styles.label}>Metode</Text>
-              <TouchableOpacity activeOpacity={0.75} style={styles.selectBox} onPress={() => setMethodModalOpen(true)}>
-                <Text style={styles.selectValue} numberOfLines={1}>
-                  {paymentMethod}
+            <View style={styles.dateStepperBox}>
+              <TouchableOpacity
+                activeOpacity={0.7}
+                style={styles.dateStepBtn}
+                onPress={() => shiftDate(-1)}
+                accessibilityLabel="Mundurkan satu hari"
+              >
+                <Ionicons name="chevron-back" size={18} color={colors.primary} />
+              </TouchableOpacity>
+              <View style={styles.dateCenterWrap}>
+                <Ionicons name="calendar-outline" size={16} color={colors.textSecondary} />
+                <Text style={styles.dateValueText} numberOfLines={1}>
+                  {formatDateMedium(txDate)}
                 </Text>
-                <Ionicons name="chevron-down" size={18} color={colors.textSecondary} />
+              </View>
+              <TouchableOpacity
+                activeOpacity={0.7}
+                style={styles.dateStepBtn}
+                onPress={() => shiftDate(1)}
+                accessibilityLabel="Majukan satu hari"
+              >
+                <Ionicons name="chevron-forward" size={18} color={colors.primary} />
               </TouchableOpacity>
             </View>
+          </View>
+
+          <View style={styles.fieldGroup}>
+            <Text style={styles.label}>Metode</Text>
+            <TouchableOpacity activeOpacity={0.75} style={styles.selectBox} onPress={() => setMethodModalOpen(true)}>
+              <Text style={styles.selectValue} numberOfLines={1}>
+                {paymentMethod}
+              </Text>
+              <Ionicons name="chevron-down" size={18} color={colors.textSecondary} />
+            </TouchableOpacity>
           </View>
 
           <View style={styles.fieldGroup}>
@@ -376,10 +434,66 @@ const styles = StyleSheet.create({
     flex: 1,
     marginRight: 6,
   },
-  twoColRow: {
+  rowBetween: {
     flexDirection: "row",
-    gap: spacing.md,
-    marginBottom: spacing.lg,
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 8,
+  },
+  quickDateRow: {
+    flexDirection: "row",
+    gap: 6,
+  },
+  quickDatePill: {
+    backgroundColor: colors.surface,
+    borderWidth: 1,
+    borderColor: colors.border,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: radius.sm,
+  },
+  quickDatePillActive: {
+    backgroundColor: colors.primary,
+    borderColor: colors.primary,
+  },
+  quickDateText: {
+    fontSize: 11,
+    fontWeight: "700",
+    color: colors.textSecondary,
+  },
+  quickDateTextActive: {
+    color: "#FFFFFF",
+  },
+  dateStepperBox: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    backgroundColor: colors.surface,
+    borderWidth: 1,
+    borderColor: colors.border,
+    borderRadius: radius.md,
+    paddingHorizontal: 8,
+    paddingVertical: 8,
+  },
+  dateStepBtn: {
+    width: 34,
+    height: 34,
+    borderRadius: radius.sm,
+    backgroundColor: colors.primarySoft,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  dateCenterWrap: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 8,
+  },
+  dateValueText: {
+    fontSize: 14,
+    fontWeight: "600",
+    color: colors.textPrimary,
   },
   proofBox: {
     flexDirection: "row",
